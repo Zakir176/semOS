@@ -27,20 +27,21 @@ void runFCFS() {
         total_waiting += processes[i].waiting_time;
         total_turnaround += processes[i].turnaround_time;
 
-        strcpy(processes[i].state, "Running");
+        processes[i].state = RUNNING;
     }
 
     printf("\nFCFS Scheduling Results:\n");
 
-    printf("\n%-5s %-15s %-10s %-10s %-15s %-15s\n",
-           "PID", "Name", "Priority", "Burst", "Waiting", "Turnaround");
+    printf("\n%-5s %-15s %-10s %-10s %-10s %-15s %-15s\n",
+           "PID", "Name", "Priority", "Burst", "State", "Wait", "Turnaround");
 
     for (int i = 0; i < count; i++) {
-        printf("%-5d %-15s %-10d %-10d %-15d %-15d\n",
+        printf("%-5d %-15s %-10s %-10d %-10s %-15d %-15d\n",
                processes[i].pid,
                processes[i].name,
-               processes[i].priority,
+               priority_to_string(processes[i].priority),
                processes[i].burst_time,
+               state_to_string(processes[i].state),
                processes[i].waiting_time,
                processes[i].turnaround_time);
     }

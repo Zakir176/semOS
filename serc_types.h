@@ -1,6 +1,6 @@
 /*  FILE: serc_types.h */
 
-/* This #ifndef block prevents the file from being included twicee.
+/* This #ifndef block prevents the file from being included twice.
    Think of it as a safety lock */
 #ifndef SERC_TYPES_H
 #define SERC_TYPES_H
@@ -11,7 +11,7 @@
 
 /* SECTION 1: GLOBAL CONSTANTS */
 
-#define MAX_PROCESSES     20      /* Maximam number of processes/tasks at one time */
+#define MAX_PROCESSES     20      /* Maximum number of processes/tasks at one time */
 #define MAX_MEMORY        1024    /* Total memory available in MB                  */
 #define MAX_NAME_LEN      50      /* Maximum length of a process name              */
 #define MAX_RESOURCES     10      /* Maximum number of resource types              */
@@ -67,7 +67,7 @@ typedef struct {
     int   pipe_fd[2];             /* Pipe file descriptors [0]=read, [1]=write   */
     int   msg_queue_id;           /* Message queue ID (-1 if not used)           */
 
-    /* --- ReSource Info--- */
+    /* --- Resource Info--- */
     int   resources_allocated[MAX_RESOURCES]; /* Resources currently held        */
     int   resources_needed[MAX_RESOURCES];    /* Resources still needed          */
 

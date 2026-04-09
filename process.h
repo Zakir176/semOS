@@ -2,7 +2,7 @@
 #define PROCESS_H
 #include "serc_types.h"
 
-extern Process processes[MAX];
+extern PCB processes[MAX_PROCESSES];
 extern int count;
 
 void createTask();
