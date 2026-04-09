@@ -4,20 +4,28 @@
 #include "ui.h"
 #include "logger.h"
 
-Process processes[MAX];
+PCB processes[MAX_PROCESSES];
 int count = 0;
 
 void createTask() {
-    Process p;
+    PCB p;
     p.pid = count + 1;
 
     printf("Enter Task Name (Ambulance/Fire/Police): ");
     scanf("%s", p.name);
 
-    p.priority = getSafeInt("Enter Priority (1 = High, 2 = Medium, 3 = Low): ");
+    int raw_priority = getSafeInt("Enter Priority (1 = Critical, 2 = High, 3 = Medium, 4 = Low): ");
+    switch(raw_priority) {
+        case 1: p.priority = CRITICAL; break;
+        case 2: p.priority = HIGH;     break;
+        case 3: p.priority = MEDIUM;   break;
+        case 4: p.priority = LOW;      break;
+        default: p.priority = LOW;      break;
+    }
+    
     p.burst_time = getSafeInt("Enter Burst Time: ");
-
-    strcpy(p.state, "Ready");
+    p.remaining_time = p.burst_time;
+    p.state = READY;
     processes[count] = p;
     count++;
 
@@ -43,6 +51,6 @@ void viewTasks() {
                processes[i].name,
                processes[i].priority,
                processes[i].burst_time,
-               processes[i].state);
+               state_to_string(processes[i].state));
     }
 }
