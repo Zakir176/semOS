@@ -46,10 +46,10 @@ void viewTasks() {
            "PID", "Name", "Priority", "Burst", "State");
 
     for (int i = 0; i < count; i++) {
-        printf("%-5d %-15s %-10d %-10d %-10s\n",
+        printf("%-5d %-15s %-10s %-10d %-10s\n",
                processes[i].pid,
                processes[i].name,
-               processes[i].priority,
+               priority_to_string(processes[i].priority),
                processes[i].burst_time,
                state_to_string(processes[i].state));
     }
