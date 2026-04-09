@@ -56,3 +56,10 @@ dkms.conf
 
 # Logs
 *.log
+serc_log.txt
+
+# Project Specific
+.vscode/
+.qodo/
+.gemini/
+guide/
