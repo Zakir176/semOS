@@ -15,21 +15,21 @@ static void resetProcessTimes(PCB **processes, int count) {
 }
 
 static void computeAverages(ScheduleResult *result, PCB **processes, int count) {
-    float totalWait = 0, totalTAT = 0;
-    int   totalBurst = 0, totalTime = 0;
+    int totalWait = 0, totalTAT = 0;
+    int totalBurst = 0, totalTime = 0;
 
     for (int i = 0; i < count; i++) {
-        totalWait  += processes[i]->waitingTime;
-        totalTAT   += processes[i]->turnaroundTime;
+        totalWait += processes[i]->waitingTime;
+        totalTAT  += processes[i]->turnaroundTime;
         totalBurst += processes[i]->burstTime;
     }
     if (result->slotCount > 0) {
         totalTime = result->slots[result->slotCount - 1].end;
     }
 
-    result->avgWaitingTime    = count > 0 ? totalWait / count : 0;
-    result->avgTurnaroundTime = count > 0 ? totalTAT  / count : 0;
-    result->cpuUtilization    = totalTime > 0 ? (float)totalBurst / totalTime * 100.0f : 0;
+    result->avgWaitingTime    = count > 0 ? (float)totalWait / (float)count : 0.0f;
+    result->avgTurnaroundTime = count > 0 ? (float)totalTAT  / (float)count : 0.0f;
+    result->cpuUtilization    = totalTime > 0 ? (float)totalBurst / (float)totalTime * 100.0f : 0.0f;
 }
 
 ScheduleResult runFCFS(PCB **processes, int count) {
@@ -41,7 +41,7 @@ ScheduleResult runFCFS(PCB **processes, int count) {
     resetProcessTimes(processes, count);
 
     PCB *sorted[MAX_PROCESSES];
-    memcpy(sorted, processes, count * sizeof(PCB *));
+    memcpy(sorted, processes, (size_t)count * sizeof(PCB *));
     for (int i = 0; i < count - 1; i++) {
         for (int j = i + 1; j < count; j++) {
             if (sorted[j]->arrivalTime < sorted[i]->arrivalTime) {

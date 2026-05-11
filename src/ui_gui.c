@@ -265,8 +265,10 @@ static void onViewMemoryStats(GtkWidget *btn, gpointer data) {
     g_string_append_printf(out, "Free Memory    : %d KB\n", s.freeMemory);
     g_string_append_printf(out, "Partitions     : %d\n",    s.partitionCount);
     g_string_append_printf(out, "Free Fragments : %d\n",    s.fragmentCount);
-    g_string_append_printf(out, "Utilization    : %.1f%%\n",
-        s.totalMemory > 0 ? (float)s.usedMemory / s.totalMemory * 100.0f : 0.0f);
+    double utilization = s.totalMemory > 0
+        ? (double)s.usedMemory / (double)s.totalMemory * 100.0
+        : 0.0;
+    g_string_append_printf(out, "Utilization    : %.1f%%\n", utilization);
     showInfo("Memory Statistics", out->str);
     g_string_free(out, TRUE);
 }

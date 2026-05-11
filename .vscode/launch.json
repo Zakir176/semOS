@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/jamie/Downloads/serc-os/src",
-      "program": "/home/jamie/Downloads/serc-os/src/build/Debug/outDebug",
+      "cwd": "/home/jamie/Downloads/serc-os",
+      "program": "/home/jamie/Downloads/serc-os/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

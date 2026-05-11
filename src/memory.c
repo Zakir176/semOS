@@ -182,7 +182,7 @@ void displayMemoryStats(void) {
     printf("  Partitions      : %d\n", s.partitionCount);
     printf("  Free Fragments  : %d\n", s.fragmentCount);
     printf("  Utilization     : %.1f%%\n",
-           s.totalMemory > 0 ? (float)s.usedMemory / s.totalMemory * 100.0f : 0.0f);
+           ((double)s.totalMemory > 0) ? (double)s.usedMemory / (double)s.totalMemory * 100.0 : 0.0);
     printf("=============================\n");
 }
 
