@@ -399,7 +399,7 @@ static GtkWidget *buildDeadlockTab(void) {
     return box;
 }
 
-/* ────────────── File Manager Tab ────────────── */
+/* ───────────── File Manager Tab ────────────── */
 
 static void onCreateFile(GtkWidget *btn, gpointer data) {
     (void)btn; (void)data;
