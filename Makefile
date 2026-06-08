@@ -13,45 +13,48 @@ SRCS_COMMON = src/logger.c       \
               src/deadlock.c     \
               src/filemanager.c
 
-SRCS_CLI    = src/ui_cli.c
-SRCS_GUI    = src/ui_gui.c
-SRC_MAIN    = src/main.c
+TARGET     = bin/serc-os
+TARGET_CLI = bin/serc-os-cli
 
-TARGET      = bin/serc-os
-TARGET_CLI  = bin/serc-os-cli
+OBJ_DIR     = obj/full
+OBJ_DIR_CLI = obj/cli
 
-OBJ_DIR     = obj
+OBJS_FULL = $(SRCS_COMMON:src/%.c=$(OBJ_DIR)/%.o) \
+            $(OBJ_DIR)/ui_cli.o                    \
+            $(OBJ_DIR)/ui_gui.o                    \
+            $(OBJ_DIR)/main.o
 
-OBJS_COMMON = $(SRCS_COMMON:src/%.c=$(OBJ_DIR)/%.o)
-OBJ_CLI     = $(OBJ_DIR)/ui_cli.o
-OBJ_GUI     = $(OBJ_DIR)/ui_gui.o
-OBJ_MAIN    = $(OBJ_DIR)/main.o
+OBJS_CLI  = $(SRCS_COMMON:src/%.c=$(OBJ_DIR_CLI)/%.o) \
+            $(OBJ_DIR_CLI)/ui_cli.o                    \
+            $(OBJ_DIR_CLI)/main_cli.o
 
 .PHONY: all cli clean dirs
 
 all: dirs $(TARGET)
-
-cli: CFLAGS  += -DSERC_CLI_ONLY
-cli: LDFLAGS  =
 cli: dirs $(TARGET_CLI)
 
-$(TARGET): $(OBJS_COMMON) $(OBJ_CLI) $(OBJ_GUI) $(OBJ_MAIN)
+$(TARGET): $(OBJS_FULL)
 	$(CC) $^ -o $@ $(LDFLAGS) $(GTK_LDFLAGS)
 
-$(TARGET_CLI): $(OBJS_COMMON) $(OBJ_CLI) $(OBJ_DIR)/main_cli.o
-	$(CC) $^ -o $@ $(LDFLAGS)
+$(TARGET_CLI): $(OBJS_CLI)
+	$(CC) $^ -o $@
+
+# Full build — GTK enabled, no CLI_ONLY flag
+$(OBJ_DIR)/ui_gui.o: src/ui_gui.c
+	$(CC) $(CFLAGS) $(GTK_CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/%.o: src/%.c
 	$(CC) $(CFLAGS) $(GTK_CFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/ui_gui.o: src/ui_gui.c
-	$(CC) $(CFLAGS) $(GTK_CFLAGS) -c $< -o $@
+# CLI build — CLI_ONLY flag, no GTK
+$(OBJ_DIR_CLI)/main_cli.o: src/main.c
+	$(CC) $(CFLAGS) -DSERC_CLI_ONLY -c $< -o $@
 
-$(OBJ_DIR)/main_cli.o: src/main.c
+$(OBJ_DIR_CLI)/%.o: src/%.c
 	$(CC) $(CFLAGS) -DSERC_CLI_ONLY -c $< -o $@
 
 dirs:
-	mkdir -p $(OBJ_DIR) bin logs
+	mkdir -p $(OBJ_DIR) $(OBJ_DIR_CLI) bin logs
 
 clean:
-	rm -rf $(OBJ_DIR) bin
+	rm -rf obj bin
