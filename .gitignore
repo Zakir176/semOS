@@ -4,7 +4,6 @@
 *.o
 *.out
 *.elf
-*.bin
 *.exe
 *.dll
 *.so
@@ -12,21 +11,18 @@
 *.lib
 *.obj
 
-# Main compiled binaries
-serc_os
-kernel
-bootloader
-
-# =========================
-# Make / CMake
-# =========================
-build/
+# Build directories
+bin/
+obj/
 dist/
 cmake-build-*/
 CMakeFiles/
+
+# =========================
+# Build configuration
+# =========================
 CMakeCache.txt
 compile_commands.json
-Makefile
 makedep*
 libtool
 aclocal.m4
@@ -42,7 +38,6 @@ autom4te.cache/
 *.pdb
 *.mod*
 *.cmd
-*.log
 
 # GDB
 .gdb_history
@@ -82,12 +77,19 @@ Thumbs.db
 desktop.ini
 
 # =========================
-# Temporary files
+# Temporary and runtime files
 # =========================
 tmp/
 temp/
 *.tmp
 *.cache
+logs/
+*.log
+
+# =========================
+# IDE-specific build artifacts
+# =========================
+.sixth/
 
 # =========================
 # Coverage / profiling
