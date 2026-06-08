@@ -20,7 +20,6 @@ jobs:
 
     - name: Build full binary
       run: |
-        make clean
         make all
 
     - name: Build CLI-only binary
