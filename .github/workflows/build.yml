@@ -24,7 +24,6 @@ jobs:
 
     - name: Build CLI-only binary
       run: |
-        make clean
         make cli
 
     - name: Run smoke test for CLI binary
