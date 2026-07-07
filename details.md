@@ -1,4 +1,3 @@
-# AGENTS
 
 ## Purpose
 Provide a brief, agent-friendly reference for working with this repository and focusing on runtime errors, edge cases, and race-condition risks.
